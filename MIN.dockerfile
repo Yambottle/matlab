@@ -42,10 +42,10 @@ RUN \
   cd /home/muser/install && \
   unzip *matlab*$MATLAB_VERSION*.zip -d /home/muser/install/matlab-files && \
   echo "fileInstallationKey=${MATLAB_FILE_KEY}" >> /home/muser/install/installer_input.txt && \
-  echo "destinationFolder=${MATLAB_INSTALLED_ROOT}" >> /home/muser/install/installer_input.txt && \
-  cd matlab-files && \
-  ./install -inputFile /home/muser/install/installer_input.txt && \
-  rm /tmp/mathworks_docker.log && \
+  echo "destinationFolder=${MATLAB_INSTALLED_ROOT}" >> /home/muser/install/installer_input.txt
+  #cd matlab-files && \
+RUN /home/muser/install/matlab-files/install -inputFile /home/muser/install/installer_input.txt
+RUN  rm /tmp/mathworks_docker.log && \
   rm -R /home/muser/install
 RUN \
   # Remove Matlab bloat R2018b/R2019a/R2016b

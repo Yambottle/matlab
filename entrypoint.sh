@@ -10,7 +10,9 @@ if [ ! -z "$MATLAB_LICENSE" ]; then
 else
     echo "No license env variable. Expecting license in '~/license_${MATLAB_VERSION}.lic'."
 fi
-echo "licenseFile=${HOME}/license_${MATLAB_VERSION}.lic" >> ~/.activate.ini
+#echo "licenseFile=${HOME}/license_${MATLAB_VERSION}.lic" >> ~/.activate.ini
+echo "installLicenseFileDir=${HOME}" >> ~/.activate.ini
+echo "installLicenseFileName=license_${MATLAB_VERSION}.lic" >> ~/.activate.ini
 ${MATLAB_INSTALLED_ROOT}/bin/activate_matlab.sh -propertiesFile ~/.activate.ini
 sed -i '$ d' ~/.activate.ini
 if [ ! -z "$MATLAB_LICENSE" ]; then

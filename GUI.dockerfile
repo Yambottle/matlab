@@ -48,13 +48,15 @@ RUN mkdir -p /home/muser/install/matlab-files
 COPY ./installers/*$MATLAB_VERSION* /home/muser/install/
 RUN \
   cd /home/muser/install && \
-  unzip *matlab*$MATLAB_VERSION*.zip -d /home/muser/install/matlab-files && \
-  echo "fileInstallationKey=${MATLAB_FILE_KEY}" >> /home/muser/install/installer_input.txt && \
-  echo "destinationFolder=${MATLAB_INSTALLED_ROOT}" >> /home/muser/install/installer_input.txt && \
-  cd matlab-files && \
-  ./install -inputFile /home/muser/install/installer_input.txt && \
-  rm /tmp/mathworks_docker.log && \
-  rm -R /home/muser/install
+  unzip *matlab*$MATLAB_VERSION*.zip -d /home/muser/install/matlab-files
+RUN echo "fileInstallationKey=${MATLAB_FILE_KEY}" >> /home/muser/install/installer_input.txt
+RUN echo "destinationFolder=${MATLAB_INSTALLED_ROOT}" >> /home/muser/install/installer_input.txt
+#RUN cd matlab-files
+RUN ls /home/muser/install/matlab-files/
+RUN env
+RUN /home/muser/install/matlab-files/install -inputFile /home/muser/install/installer_input.txt
+RUN rm /tmp/mathworks_docker.log
+RUN rm -R /home/muser/install
 #Jupyter Notebook Install
 RUN \
   cd ${MATLAB_INSTALLED_ROOT}/extern/engines/python && \
