@@ -2,7 +2,8 @@
 version: '2.4'
 services:
   matlab:
-    build: # only necessary if rebuilding image
+    build:
+      # only necessary if rebuilding image
       context: .
       dockerfile: ${MATLAB_IMAGE_TYPE}.dockerfile
       args:
@@ -11,7 +12,7 @@ services:
         - PY_VERSION
         - MATLAB_INSTALLED_ROOT
     #image: raphaelguzman/matlab:${MATLAB_VERSION}-${MATLAB_IMAGE_TYPE}
-    image: drewyangdev/matlab:${MATLAB_VERSION}-${MATLAB_IMAGE_TYPE}
+    image: datajoint/matlab:${MATLAB_VERSION}-${MATLAB_IMAGE_TYPE}
     environment:
       - DISPLAY # only necessary for GUI image
       - MATLAB_LICENSE # Must specify MATLAB_LICENSE variable or license file volume mount
@@ -21,9 +22,10 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw # only necessary for GUI image
       # - ./licenses/${MATLAB_VERSION}_joseph_license.lic:/home/muser/license_${MATLAB_VERSION}.lic:ro # Must specify MATLAB_LICENSE variable or license file volume mount
-      - ./licenses/${MATLAB_VERSION}_joseph_license.lic:/home/muser/.MATLAB/licenses/license_${MATLAB_VERSION}.lic:ro # Must specify MATLAB_LICENSE variable or license file volume mount
-      - /home/ubuntu/neuropixel:/home/muser/neuropixel
-    ports: # only necessary for GUI image
+      - ./licenses/license_${MATLAB_VERSION}.lic:/home/muser/.MATLAB/licenses/license_${MATLAB_VERSION}.lic:ro # Must specify MATLAB_LICENSE variable or license file volume mount
+      # - /home/ubuntu/neuropixel:/home/muser/neuropixel
+    ports:
+      # only necessary for GUI image
       - "8888:8888"
     mac_address: $MATLAB_HOSTID
     command:
